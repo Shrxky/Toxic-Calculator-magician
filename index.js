@@ -59,7 +59,17 @@ document.getElementById("secretSubmit").addEventListener("click", () => {
 
   secretValue = Number(input);
   document.getElementById("secretInput").style.visibility = "hidden";
-  console.log("Secret value saved:", secretValue);
+
+  // Request motion permission on iOS
+  if (typeof DeviceOrientationEvent.requestPermission === "function") {
+    DeviceOrientationEvent.requestPermission()
+      .then(response => {
+        if (response === "granted") {
+          console.log("Motion permission granted");
+        }
+      })
+      .catch(console.error);
+  }
 });
 
 // ── Device tilt ──
