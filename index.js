@@ -85,3 +85,7 @@ window.addEventListener('deviceorientation', (event) => {
     container.style.visibility = "visible";
   }
 });
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js');
+}
