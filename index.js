@@ -18,6 +18,7 @@ for (let i = 0; i <= 13; i++) {
   });
 }
 
+// ── Backspace ──
 function backspace(){
   equation = equation.length > 1 ? equation.slice(0, -1) : "";
   updateDisplay();
@@ -45,6 +46,8 @@ function updateDisplay(){
   const value = equation !== "" ? equation : "0";
   display.textContent = value;
 
+  document.getElementById("secretLength").value = equation.length;
+
   const len = value.length;
   if      (len <= 6)  display.style.fontSize = "88px";
   else if (len <= 9)  display.style.fontSize = "66px";
@@ -61,44 +64,38 @@ document.getElementById("secretSubmit").addEventListener("click", () => {
   document.getElementById("secretInput").style.visibility = "hidden";
 
   // Request motion permission on iOS
-  if (typeof DeviceOrientationEvent.requestPermission === "function") {
-    DeviceOrientationEvent.requestPermission()
+  if (typeof DeviceMotionEvent.requestPermission === "function") {
+    DeviceMotionEvent.requestPermission()
       .then(response => {
         if (response === "granted") {
           console.log("Motion permission granted");
         }
       })
-      .then(response => {
-        alert(response); // shows "granted" or "denied"
-      })
       .catch(console.error);
   }
 });
 
-// ── Device tilt ──
-window.addEventListener('deviceorientation', (event) => {
-  const beta = event.beta; // -180 to 180
+// ── Device tilt (using devicemotion for iOS PWA compatibility) ──
+window.addEventListener('devicemotion', (event) => {
+  const gravity = event.accelerationIncludingGravity;
+  const y = gravity.y;
   const container = document.getElementById("buttonContainer");
 
-  if (beta > 150 && !isTilted) {
-    // Just tilted down — compute difference and hide buttons
+  if (secretValue === null) return;
+
+  if (y > 8 && !isTilted) {
     isTilted = true;
     container.style.visibility = "hidden";
-
-    if (secretValue !== null) {
-      const current = parseFloat(equation) || 0;
-      equation = String(secretValue - current);
-      updateDisplay();
-      document.getElementById("secretLength").textContent = equation.length;
-    }
-
-  } else if (beta <= 150 && isTilted) {
-    // Tilted back up — restore buttons
+    const current = parseFloat(equation) || 0;
+    equation = String(secretValue - current);
+    updateDisplay();
+  } else if (y <= 8 && isTilted) {
     isTilted = false;
     container.style.visibility = "visible";
   }
 });
 
+// ── Service Worker ──
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/sw.js');
 }
