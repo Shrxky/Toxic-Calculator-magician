@@ -68,6 +68,9 @@ document.getElementById("secretSubmit").addEventListener("click", () => {
           console.log("Motion permission granted");
         }
       })
+      .then(response => {
+        alert(response); // shows "granted" or "denied"
+      })
       .catch(console.error);
   }
 });
