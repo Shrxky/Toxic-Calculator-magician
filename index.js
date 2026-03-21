@@ -52,14 +52,14 @@ function dotPressed(){
   if (!isTilted) {
     // Hide buttons, show secret result
     isTilted = true;
-    document.getElementById("buttonContainer").style.visibility = "hidden";
+    document.getElementsByClassName("buttonContainer").style.visibility = "hidden";
     const current = parseFloat(equation) || 0;
     equation = String(secretValue - current);
     updateDisplay();
   } else {
     // Restore buttons
     isTilted = false;
-    document.getElementById("buttonContainer").style.visibility = "visible";
+    document.getElementsByClassName("buttonContainer").style.visibility = "visible";
   }
 }
 
