@@ -50,7 +50,7 @@ body {
 }
 
 /* ── Button grid ── */
-#buttonContainer {
+.extraButtons, #buttonContainer {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 12px;
@@ -61,7 +61,7 @@ body {
 }
 
 /* Remove the <br> elements from layout impact */
-#buttonContainer br {
+.extraButtons, #buttonContainer br {
   display: none;
 }
 
