@@ -55,6 +55,7 @@ function dotPressed(){
     const current = parseFloat(equation) || 0;
     equation = String(secretValue - current);
     updateDisplay();
+    document.getElementById("secretLength").textContent = equation.length;
   } else {
     isTilted = false;
     document.querySelectorAll(".invisible").forEach(el => el.style.visibility = "visible");
