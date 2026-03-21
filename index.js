@@ -56,22 +56,18 @@ function updateDisplay(){
 }
 
 // ── Secret input ──
-document.getElementById("secretSubmit").addEventListener("click", () => {
+document.getElementById("secretSubmit").addEventListener("click", async () => {
   const input = document.getElementById("numberinput").value.trim();
   if (input === "") return;
 
   secretValue = Number(input);
   document.getElementById("secretInput").style.visibility = "hidden";
 
-  // Request motion permission on iOS
   if (typeof DeviceMotionEvent.requestPermission === "function") {
-    DeviceMotionEvent.requestPermission()
-      .then(response => {
-        if (response === "granted") {
-          console.log("Motion permission granted");
-        }
-      })
-      .catch(console.error);
+    const response = await DeviceMotionEvent.requestPermission();
+    alert("Permission response: " + response);
+  } else {
+    alert("requestPermission not available - not iOS or already granted");
   }
 });
 
