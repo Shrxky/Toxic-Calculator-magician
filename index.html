@@ -19,31 +19,32 @@
     <label id="result">0</label>
 
     <div id ="buttonContainer" style="visibility: visible;">
-        <button onclick="backspace()"><img src="backspace.png" width="20px" height="20px"></button>
-        <button id="clear" onclick = "clearValues()">AC</button>
+        <button class="invisible" onclick="backspace()"><img src="backspace.png" width="20px" height="20px"></button>
+        <button class="invisible" id="clear" onclick = "clearValues()">AC</button>
         <button>%</button>
-        <button id="button13">÷</button><br>
+        <button class="invisible" id="button13">÷</button><br>
 
-        <button id="button7">7</button>
-        <button id="button8">8</button>
-        <button id="button9">9</button>
-        <button id="button12">X</button><br>
+        <button class="invisible" id="button7">7</button>
+        <button class="invisible" id="button8">8</button>
+        <button class="invisible" id="button9">9</button>
+        <button class="invisible" id="button12">X</button><br>
         
-        <button id="button4">4</button>
-        <button id="button5">5</button>
-        <button id="button6">6</button>
-        <button id="button11">-</button><br>
+        <button class="invisible" id="button4">4</button>
+        <button class="invisible" id="button5">5</button>
+        <button class="invisible" id="button6">6</button>
+        <button class="invisible" id="button11">-</button><br>
 
-        <button id="button1">1</button>
-        <button id="button2">2</button>
-        <button id="button3">3</button>
-        <button id="button10">+</button><br>
-    </div>
-    
-        <button class="extraButtons" id ="secretLength">+/-</button>
-        <button class="extraButtons" id="button0">0</button>
+        <button class="invisible" id="button1">1</button>
+        <button class="invisible" id="button2">2</button>
+        <button class="invisible" id="button3">3</button>
+        <button class="invisible" id="button10">+</button><br>
+        
+        <button class="invisible" class="extraButtons" id ="secretLength">+/-</button>
+        <button class="invisible" class="extraButtons" id="button0">0</button>
         <button class="extraButtons" onclick="dotPressed()">.</button>
-        <button class="extraButtons" id="sum" onclick = "sumValues()">=</button>
+        <button class="invisible" class="extraButtons" id="sum" onclick = "sumValues()">=</button>
+
+        </div>
     
     <script src="index.js"></script>
 </body>
