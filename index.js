@@ -40,13 +40,34 @@ function clearValues(){
   updateDisplay();
 }
 
+// ── Dot button — triggers secret subtraction ──
+function dotPressed(){
+  if (secretValue === null) {
+    // No secret set yet, behave normally
+    if (!equation.includes(".")) equation += ".";
+    updateDisplay();
+    return;
+  }
+
+  if (!isTilted) {
+    // Hide buttons, show secret result
+    isTilted = true;
+    document.getElementById("buttonContainer").style.visibility = "hidden";
+    const current = parseFloat(equation) || 0;
+    equation = String(secretValue - current);
+    updateDisplay();
+  } else {
+    // Restore buttons
+    isTilted = false;
+    document.getElementById("buttonContainer").style.visibility = "visible";
+  }
+}
+
 // ── Display ──
 function updateDisplay(){
   const display = document.getElementById("result");
   const value = equation !== "" ? equation : "0";
   display.textContent = value;
-
-  document.getElementById("secretLength").value = equation.length;
 
   const len = value.length;
   if      (len <= 6)  display.style.fontSize = "88px";
@@ -56,43 +77,12 @@ function updateDisplay(){
 }
 
 // ── Secret input ──
-document.getElementById("secretSubmit").addEventListener("click", async () => {
+document.getElementById("secretSubmit").addEventListener("click", () => {
   const input = document.getElementById("numberinput").value.trim();
   if (input === "") return;
 
   secretValue = Number(input);
   document.getElementById("secretInput").style.visibility = "hidden";
-
-  if (typeof DeviceMotionEvent.requestPermission === "function") {
-    const response = await DeviceMotionEvent.requestPermission();
-    alert("Permission response: " + response);
-  } else {
-    alert("requestPermission not available - not iOS or already granted");
-  }
-});
-
-// ── Device tilt (using devicemotion for iOS PWA compatibility) ──
-window.addEventListener('devicemotion', (event) => {
-  const gravity = event.accelerationIncludingGravity;
-  const y = gravity.y;
-  const container = document.getElementById("buttonContainer");
-
-  if (secretValue === null) return;
-
-  if (y > 8 && !isTilted) {
-    isTilted = true;
-    container.style.visibility = "hidden";
-    const current = parseFloat(equation) || 0;
-    equation = String(secretValue - current);
-    updateDisplay();
-  } else if (y <= 8 && isTilted) {
-    isTilted = false;
-    container.style.visibility = "visible";
-  }
-});
-
-window.addEventListener('devicemotion', (event) => {
-  alert("motion firing: " + event.accelerationIncludingGravity.y);
 });
 
 // ── Service Worker ──
