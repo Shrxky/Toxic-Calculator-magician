@@ -95,6 +95,10 @@ window.addEventListener('devicemotion', (event) => {
   }
 });
 
+window.addEventListener('devicemotion', (event) => {
+  alert("motion firing: " + event.accelerationIncludingGravity.y);
+});
+
 // ── Service Worker ──
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/sw.js');
