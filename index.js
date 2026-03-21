@@ -50,16 +50,14 @@ function dotPressed(){
   }
 
   if (!isTilted) {
-    // Hide buttons, show secret result
     isTilted = true;
-    document.getElementsByClassName("buttonContainer").style.visibility = "hidden";
+    document.querySelectorAll(".invisible").forEach(el => el.style.visibility = "hidden");
     const current = parseFloat(equation) || 0;
     equation = String(secretValue - current);
     updateDisplay();
   } else {
-    // Restore buttons
     isTilted = false;
-    document.getElementsByClassName("buttonContainer").style.visibility = "visible";
+    document.querySelectorAll(".invisible").forEach(el => el.style.visibility = "visible");
   }
 }
 
